@@ -1,0 +1,8 @@
+[build]
+  functions = "netlify/functions"  # Path to serverless functions
+  publish = "public"               # Path to front-end HTML files
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
