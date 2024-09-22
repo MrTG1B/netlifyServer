@@ -1,5 +1,4 @@
-const fs = require('fs');
-const path = require('path');
+let storedData = {};  // Global variable to store data
 
 exports.handler = async (event, context) => {
     if (event.httpMethod !== 'GET') {
@@ -10,19 +9,19 @@ exports.handler = async (event, context) => {
     }
 
     try {
-        const filePath = path.resolve('/tmp/data.json');
-        if (fs.existsSync(filePath)) {
-            const data = fs.readFileSync(filePath, 'utf-8');
-            return {
-                statusCode: 200,
-                body: data
-            };
-        } else {
+        // Check if any data has been stored
+        if (Object.keys(storedData).length === 0) {
             return {
                 statusCode: 404,
                 body: 'No data found'
             };
         }
+
+        // Return the stored data
+        return {
+            statusCode: 200,
+            body: JSON.stringify(storedData)
+        };
     } catch (error) {
         return {
             statusCode: 500,
