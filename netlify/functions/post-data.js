@@ -1,5 +1,4 @@
-const fs = require('fs');
-const path = require('path');
+let storedData = {};  // Global variable to store data
 
 exports.handler = async (event, context) => {
     if (event.httpMethod !== 'POST') {
@@ -11,9 +10,9 @@ exports.handler = async (event, context) => {
 
     try {
         const data = JSON.parse(event.body);
-        const filePath = path.resolve('/tmp/data.json'); // Using /tmp in Netlify
 
-        fs.writeFileSync(filePath, JSON.stringify(data));
+        // Store the data in the global variable
+        storedData = data;
 
         return {
             statusCode: 200,
